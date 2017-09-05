@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pf="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<f:view>
+<h:head>
+    <h:outputStylesheet name="bootstrap3/css/bootstrap.css"/>
+    <title><ui:insert name="title">Title</ui:insert></title>
+</h:head>
+<h:body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3">
+                <h:form id="form" enctype="multipart/form-data" prependId="true">
+                    <h:inputFile id="file" value="#{fileUpload.file}">
+                        <f:ajax execute="@this"/>
+                    </h:inputFile>
+                    <!-- TODO:add link to output -->
+                </h:form>
+            </div>
+            <div class="col-sm-6">
+                <h:form>
+                <h:outputLabel value="Lunch Item Count: "/>
+               <p:spinner id="lunch" value="#{fileUpload.lunch}" increment="1" min="0" max="10">
+                    <f:ajax execute="@this"/>
+                </p:spinner><br/>
+                <h:outputLabel value="Adult Item Count: "/>
+                <p:spinner id="adult" value="#{fileUpload.adult}" increment="1" min="0" max="10">
+                    <f:ajax execute="@this"/>
+                </p:spinner><br/>
+                </h:form>
+            </div>
+            <div class="col-sm-3">
+                <h:form>
+                <pf:outputLabel value="Select day for creation:  "/>
+                <pf:selectOneMenu id="days" value="#{fileUpload.day}">
+                    <f:selectItems value="#{fileUpload.days}"/>
+                    <f:ajax execute="@this"/>
+                </pf:selectOneMenu>
+                </h:form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <h:form id="lunch">
+                <h:outputLabel value="Lunch"/><br/>
+                <h:inputText id="item0" value="#{fileUpload.item0}" >
+                    <f:ajax execute="@this"/>
+                </h:inputText><br/>
+                <h:inputText id="item1" value="#{fileUpload.item1}">
+                    <f:ajax execute="@this"/>
+                </h:inputText><br/>
+                <h:inputText id="item2" value="#{fileUpload.item2}">
+                    <f:ajax execute="@this"/>
+                </h:inputText><br/>
+                <h:inputText id="item3" value="#{fileUpload.item3}">
+                    <f:ajax execute="@this"/>
+                </h:inputText><br/>
+                <h:inputText id="item4" value="#{fileUpload.item4}">
+                    <f:ajax execute="@this"/>
+                </h:inputText><br/>
+                <h:inputText id="item5" value="#{fileUpload.item5}">
+                    <f:ajax execute="@this"/>
+                </h:inputText><br/>
+                <h:inputText id="item6" value="#{fileUpload.item6}">
+                    <f:ajax execute="@this"/>
+                </h:inputText><br/>
+                <h:inputText id="item7" value="#{fileUpload.item7}">
+                    <f:ajax execute="@this"/>
+                </h:inputText><br/>
+                <h:inputText id="item8" value="#{fileUpload.item8}">
+                    <f:ajax execute="@this"/>
+                </h:inputText><br/>
+                <h:inputText id="item9" value="#{fileUpload.item9}">
+                    <f:ajax execute="@this" />
+                </h:inputText><br/>
+                </h:form>
+            </div>
+            <div class="col-md-4">
+                <h:form id="brk">
+                <h:outputLabel value="Breakfast"/><br/>
+                <h:inputText id="brkitem0" value="#{fileUpload.brkItem0}">
+                    <f:ajax execute="@this"/>
+                </h:inputText><br/>
+                <h:inputText id="brkitem1" value="#{fileUpload.brkItem1}">
+                    <f:ajax execute="@this"/>
+                </h:inputText><br/>
+                <h:inputText id="brkitem2" value="#{fileUpload.brkItem2}">
+                    <f:ajax execute="@this"/>
+                </h:inputText><br/>
+                <h:inputText id="brkitem3" value="#{fileUpload.brkItem3}">
+                    <f:ajax execute="@this"/>
+                </h:inputText><br/>
+                <h:inputText id="brkitem4" value="#{fileUpload.brkItem4}">
+                    <f:ajax execute="@this"/>
+                </h:inputText><br/>
+                <h:inputText id="brkitem5" value="#{fileUpload.brkItem5}">
+                    <f:ajax execute="@this"/>
+                </h:inputText><br/>
+                <h:inputText id="brkitem6" value="#{fileUpload.brkItem6}">
+                    <f:ajax execute="@this"/>
+                </h:inputText><br/>
+                </h:form>
+            </div>
+            <div class="col-md-4">
+                <h:form id="snk">
+                <h:outputLabel value="Snack"/><br/>
+                <h:inputText id="snkitem0" value="#{fileUpload.snkItem0}">
+                    <f:ajax execute="@this"/>
+                </h:inputText><br/>
+                <h:inputText id="snkitem1" value="#{fileUpload.snkItem1}">
+                    <f:ajax execute="@this"/>
+                </h:inputText><br/>
+                <h:inputText id="snkitem2" value="#{fileUpload.snkItem2}">
+                    <f:ajax execute="@this"/>
+                </h:inputText><br/>
+                <h:inputText id="snkitem3" value="#{fileUpload.snkItem3}">
+                    <f:ajax execute="@this"/>
+                </h:inputText><br/>
+                <h:inputText id="snkitem4" value="#{fileUpload.snkItem4}">
+                    <f:ajax execute="@this"/>
+                </h:inputText><br/>
+                <h:inputText id="snkitem5" value="#{fileUpload.snkItem5}">
+                    <f:ajax execute="@this"/>
+                </h:inputText><br/>
+                <h:inputText id="snkitem6" value="#{fileUpload.snkItem6}">
+                    <f:ajax execute="@this"/>
+                </h:inputText><br/>
+                </h:form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-9"></div>
+            <div class="col-sm-3">
+                <h:form>
+                <h:commandButton id="run" value="Run" action="#{fileUpload.upload}" rendered="true"/>
+                </h:form>
+            </div>
+        </div>
+    </div>
+</h:body>
+</f:view>
+</html>

@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="KitchenSheets">
+    <output-path>$PROJECT_DIR$/out/artifacts/KitchenSheets</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="KitchenSheetsWebApp/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="KitchenSheetsWebApp" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="application" name="org.apache.poi:poi-ooxml:3.16" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
