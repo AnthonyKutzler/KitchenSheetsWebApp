@@ -9,6 +9,8 @@
         </element>
         <element id="directory" name="lib">
           <element id="library" level="application" name="org.apache.poi:poi-ooxml:3.16" />
+          <element id="library" level="application" name="org.apache.poi:poi-scratchpad:3.10-FINAL" />
+          <element id="library" level="application" name="org.mariadb.jdbc:mariadb-java-client:2.1.0-SNAPSHOT" />
         </element>
       </element>
     </root>

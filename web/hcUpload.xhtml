@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <h:outputStylesheet name="bootstrap3/css/bootstrap.css"/>
+    <title><ui:insert name="title">Title</ui:insert></title>
+</h:head>
+<h:body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3">
+                <h:outputLabel value="Lunch:" style="font-weight:bold"/><br/>
+                <h:outputText value="#{hcUpload.lunch}" escape="false"/><br/>
+                <h:outputLabel value="Sub:" style="font-weight:bold"/><br/>
+                <h:outputText value="#{hcUpload.sub}" escape="false"/><br/>
+                <h:outputLabel value="Vegetarian:" style="font-weight:bold"/><br/>
+                <h:outputText value="#{hcUpload.vegetarian}" escape="false"/><br/>
+                <h:outputLabel value="Adult:" style="font-weight:bold"/><br/>
+                <h:outputText value="#{hcUpload.adult}" escape="false"/><br/>
+            </div>
+            <div class="col-sm-3">
+                <h:outputLabel value="Breakfast:" style="font-weight:bold"/><br/>
+                <h:outputText value="#{hcUpload.breakfast}" escape="false"/><br/>
+                <h:outputLabel value="United Breakfast:" style="font-weight:bold"/><br/>
+                <h:outputText value="#{hcUpload.uBreakfast}" escape="false"/><br/>
+            </div>
+            <div class="col-sm-3">
+                <h:outputLabel value="Snack:" style="font-weight:bold"/><br/>
+                <h:outputText value="#{hcUpload.snack}" escape="false"/><br/>
+                <h:outputLabel value="United Snack:" style="font-weight:bold"/><br/>
+                <h:outputText value="#{hcUpload.uSnack}" escape="false"/><br/>
+                <h:outputLabel value="Head Start Snack:" style="font-weight:bold"/><br/>
+                <h:outputText value="#{hcUpload.hsSnack}" escape="false"/><br/>
+            </div>
+            <div class="col-sm-3">
+                <h:form id="form5" enctype="multipart/form-data" prependId="true">
+                    <p:calendar id="calendar" value="#{hcUpload.date}" mode="inline">
+                        <p:ajax event="dateSelect" execute="@all"/>
+                    </p:calendar><br/>
+                </h:form>
+            </div>
+        </div>
+        <div class="row" style="padding-top: 10px">
+            <div class="col-sm-3">
+                <h:form id="form6" enctype="multipart/form-data" prependId="true">
+                    <h:inputFile id="file" value="#{hcUpload.file}">
+                        <f:ajax execute="@this"/>
+                    </h:inputFile>
+                </h:form>
+            </div>
+            <div class="col-sm-6"> </div>
+            <div class="col-sm-3">
+                <h:form>
+                    <h:commandButton id="run" value="Run" action="#{hcUpload.runSheetParser}" rendered="true"/>
+                </h:form>
+            </div>
+        </div>
+    </div>
+</h:body>
+</html>

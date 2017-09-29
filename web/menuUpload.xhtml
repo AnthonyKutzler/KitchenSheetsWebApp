@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <h:outputStylesheet name="bootstrap3/css/bootstrap.css"/>
+    <title><ui:insert name="title">Title</ui:insert></title>
+</h:head>
+<h:body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-4">
+                <h:form id="form" enctype="multipart/form-data" prependId="true">
+                    <h:outputLabel value="Kids Lunch"/>
+                    <h:inputFile id="lunch" value="#{menuUpload.lunch}">
+                        <f:ajax execute="@this"/>
+                    </h:inputFile>
+                    <br/>
+                    <h:outputLabel value="Sub Menu"/>
+                    <h:inputFile id="sub" value="#{menuUpload.sub}">
+                        <f:ajax execute="@this"/>
+                    </h:inputFile>
+                    <br/>
+                    <h:outputLabel value="Vegetarian"/>
+                    <h:inputFile id="vegetarian" value="#{menuUpload.vegetarian}">
+                        <f:ajax execute="@this"/>
+                    </h:inputFile>
+                    <br/>
+                    <h:outputLabel value="adult"/>
+                    <h:inputFile id="adult" value="#{menuUpload.adult}">
+                        <f:ajax execute="@this"/>
+                    </h:inputFile>
+                    <br/>
+                </h:form>
+            </div>
+            <div class="col-sm-4">
+                <h:form id="form2" enctype="multipart/form-data" prependId="true">
+                    <h:outputLabel value="Breakfast"/>
+                    <h:inputFile id="breakfast" value="#{menuUpload.breakfast}">
+                        <f:ajax execute="@this"/>
+                    </h:inputFile>
+                    <h:outputLabel value="United Breakfast"/>
+                    <h:inputFile id="ubreakfast" value="#{menuUpload.uBreakfast}">
+                        <f:ajax execute="@this"/>
+                    </h:inputFile>
+                </h:form>
+            </div>
+            <div class="col-sm-4">
+                <h:form id="form3" enctype="multipart/form-data" prependId="true">
+                    <h:outputLabel value="Snack"/>
+                    <h:inputFile id="snack" value="#{menuUpload.snack}">
+                        <f:ajax execute="@this"/>
+                    </h:inputFile>
+                    <h:outputLabel value="United Snack"/>
+                    <h:inputFile id="usnack" value="#{menuUpload.uSnack}">
+                        <f:ajax execute="@this"/>
+                    </h:inputFile>
+                    <h:outputLabel value="Head Start Snack"/>
+                    <h:inputFile id="hssnack" value="#{menuUpload.hsSnack}">
+                        <f:ajax execute="@this"/>
+                    </h:inputFile>
+                </h:form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-9">
+                <!--Empty for spacing-->
+            </div>
+            <div class="col-sm-3">
+                <h:form id="form4">
+                    <h:commandButton id="run" value="Upload" action="#{menuUpload.uploadMenus}" rendered="true"/>
+                </h:form>
+            </div>
+        </div>
+    </div>
+</h:body>
+</html>

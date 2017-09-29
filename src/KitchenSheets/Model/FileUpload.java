@@ -22,15 +22,13 @@ import java.util.List;
 @ViewScoped
 public class FileUpload implements Serializable {
 
+
+    private FileUpload[] daysOfTheWeek = new FileUpload[5];
     //file path's
     private static final String tempPath = "/a/b/c";
     private static final String uploadPath = "/home/gob/webSheets/";
     //upload vars
     private Part file;
-    //servlet request vars
-    //private HttpServletRequest request;
-    //private static final int MEMORY_THRESHOLD = 1024 * 1024 * 5;
-    //private static final int MAX_FILE_SIZE = 1024 * 1024 * 100;
 
     private static final String[] FINAL_ITEMS = {"Cold Trays", "Bread", "Fruit", "Allergy", "Protein", "Starch", "Veggie"};
 
@@ -84,36 +82,8 @@ public class FileUpload implements Serializable {
         }
         workingFile.delete();
         download();
-        //workingFile
-        /*if(!ServletFileUpload.isMultipartContent(request)){
-            //print error
-            return;
-        }
-        DiskFileItemFactory factory = new DiskFileItemFactory();
-        factory.setSizeThreshold(MEMORY_THRESHOLD);
-        factory.setRepository(new File(tempPath));
-        factory.setSizeThreshold(MAX_FILE_SIZE);
-        ServletFileUpload fileUpload = new ServletFileUpload(factory);
-        File uploadDir = new File(uploadPath);
-        if(!uploadDir.exists())
-            uploadDir.mkdir();
-        try{
-            List<FileItem> formItems = fileUpload.parseRequest(request);
-            if(formItems != null && formItems.size() > 0){
-                for(FileItem item : formItems){
-                    if(item.isFormField()){
-                        String filePath = uploadPath + File.separator + new File(item.getName()).getName();
-                        File storeFile = new File(filePath);
-                        item.write(storeFile);
-                    }
-                }
-            }
-        }catch (Exception e){e.printStackTrace();}
-
-        //TODO: prosscess file
-        //TODO: redirect to download file page
-        */
     }
+
     private void download() throws IOException {
         FacesContext fContext = FacesContext.getCurrentInstance();
         ExternalContext eContext = fContext.getExternalContext();
@@ -151,24 +121,16 @@ public class FileUpload implements Serializable {
         String[] returnArray = new String[count];
         for(int z = 0; z < count; z++){
             if(lunch) {
-                if(z < 4)
-                    returnArray[z] = FINAL_ITEMS[z];
-                else if(z >= 4 && z < returnArray.length + 4 - FINAL_ITEMS.length)
-                    returnArray[z] = array[z - 4];
-                else
-                    returnArray[z] = FINAL_ITEMS[z - (returnArray.length - FINAL_ITEMS.length)];
+                returnArray[z] = z < 4 ? FINAL_ITEMS[z] : z < returnArray.length + 4 - FINAL_ITEMS.length
+                        ? array[z - 4] : FINAL_ITEMS[z - (returnArray.length - FINAL_ITEMS.length)];
             }else{
-                if(z < 1)
-                    returnArray[z] = FINAL_ITEMS[z];
-                else
-                    returnArray[z] = array[z - 1];
+                returnArray[z] = z < 1 ? FINAL_ITEMS[z] : array[z - 1];
             }
         }
         return returnArray;
     }
 
     //Upload Getters/ Setters
-
     public Part getFile() {
         return file;
     }
