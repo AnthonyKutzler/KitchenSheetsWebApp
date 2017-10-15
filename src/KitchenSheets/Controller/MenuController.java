@@ -1,17 +1,17 @@
 package KitchenSheets.Controller;
 
 import org.apache.poi.hwpf.HWPFDocument;
+import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 import javax.servlet.http.Part;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.Map;
 
 public class MenuController {
-
 
     private static final String tempPath = "/home/gob/webSheets/";
     private static final int MenuDateOffset = 6;
@@ -28,23 +28,36 @@ public class MenuController {
             InputStream iStream = file.getInputStream();
             File workingFile = new File(tempPath, file.getSubmittedFileName());
             Files.copy(iStream, workingFile.toPath());
-            doc = new HWPFDocument(new FileInputStream(workingFile));
-            String docText = doc.getText().toString();
-            String[] initialSplit = docText.split("\u0007");
-            for (int z = 0; z < initialSplit.length; z++) {
-                initialSplit[z] = initialSplit[z].trim();
-                if (!initialSplit[z].equals("")) {
-                    if (Character.isDigit(initialSplit[z].charAt(0))) {
-                        String[] dates = initialSplit[z].split("   ");
-                        for (int y = 0; y < dates.length; y++) {
-                            if (!dates[y].contains("(closed)")) {
-                                new DbController().insertOrUpdate(dates[y], menu,
-                                        initialSplit[z + MenuDateOffset].replace("\r", ","));
-                            }
+            if(workingFile.getAbsolutePath().substring(workingFile.getAbsolutePath().length() - 3,
+                    workingFile.getAbsolutePath().length()).equals("doc"))
+                parseDoc(menu, new HWPFDocument(new FileInputStream(workingFile)).getText().toString());
+            else {
+                XWPFDocument docx = new XWPFDocument(iStream);
+                parseDoc(menu, new XWPFWordExtractor(docx).getText());//new XWPFDocument(new FileInputStream(workingFile)));
+
+            }
+            Files.delete(workingFile.toPath());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void parseDoc(String menu, String text){
+        String[] initialSplit = text.split("\u0007");
+        for (int z = 0; z < initialSplit.length; z++) {
+            initialSplit[z] = initialSplit[z].trim();
+            if (!initialSplit[z].equals("")) {
+                if (Character.isDigit(initialSplit[z].charAt(0))) {
+                    String[] dates = initialSplit[z].split("   ");
+                    for (int y = 0; y < dates.length; y++) {
+                        if (!dates[y].contains("(closed)")) {
+                            new MenuDatabase().insertOrUpdate(dates[y].trim(), menu,
+                                    initialSplit[z + MenuDateOffset].replace("\r", "/")
+                                            .replace("\u000B","/"));
                         }
                     }
                 }
             }
-        }catch (Exception e){}
+        }
     }
 }

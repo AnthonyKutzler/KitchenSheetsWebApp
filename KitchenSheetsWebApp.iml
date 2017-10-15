@@ -23,8 +23,8 @@
     <orderEntry type="library" exported="" scope="PROVIDED" name="GlassFish 4.1.2 - JSF" level="application_server_libraries" />
     <orderEntry type="library" name="JBoss Weld-2.0.3" level="project" />
     <orderEntry type="library" name="org.apache.poi:poi-ooxml:3.16" level="application" />
-    <orderEntry type="library" name="org.apache.poi:poi-scratchpad:3.10-FINAL" level="application" />
     <orderEntry type="library" name="org.mariadb.jdbc:mariadb-java-client:2.1.0-SNAPSHOT" level="application" />
     <orderEntry type="library" name="PrimeFaces-6.1" level="project" />
+    <orderEntry type="library" name="org.apache.poi:poi-scratchpad:3.16" level="application" />
   </component>
 </module>

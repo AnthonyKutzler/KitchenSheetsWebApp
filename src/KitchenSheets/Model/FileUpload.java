@@ -55,7 +55,7 @@ public class FileUpload implements Serializable {
     //2D items Array
     private String[][] items;
     private String day;
-    private String downloadFileName;
+    //private String downloadFileName;
     //last index of [0] = kids meals // [1] = lunch meals
     private int[] columnAbsolutes = new int[2];
     private int lunch = 0, adult = 0;
@@ -74,18 +74,19 @@ public class FileUpload implements Serializable {
         InputStream iStream = file.getInputStream();
         workingFile = new File(uploadPath, file.getSubmittedFileName());
         Files.copy(iStream, workingFile.toPath());
+        String downloadFileName;
         try {
             downloadFileName = new XSSFWorkbookParser(workingFile, day).parseCopy(items,
-                    new int[] {columnAbsolutes[0], columnAbsolutes[0] + columnAbsolutes[1]});
-        }catch (Exception e){
+                    new int[]{columnAbsolutes[0], columnAbsolutes[0] + columnAbsolutes[1]});
             workingFile.delete();
-        }
+            download(FacesContext.getCurrentInstance(), downloadFileName);
+        }catch (Exception e){
         workingFile.delete();
-        download();
+        }
     }
 
-    private void download() throws IOException {
-        FacesContext fContext = FacesContext.getCurrentInstance();
+    protected static void download(FacesContext fContext, String downloadFileName) throws IOException {
+        //FacesContext fContext = FacesContext.getCurrentInstance();
         ExternalContext eContext = fContext.getExternalContext();
         File downloadFile = new File(downloadFileName);
         eContext.responseReset();

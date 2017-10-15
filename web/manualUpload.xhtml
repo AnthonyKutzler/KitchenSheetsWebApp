@@ -15,6 +15,21 @@
 <h:body>
     <div class="container-fluid">
         <div class="row">
+            <div class="col-sm-2"/>
+            <div class="col-sm-8">
+                <br/>
+                <h:outputText value="Manual Upload. This is to be used if the other methods fail to be useful. Directions
+                are, Enter each item, individually, in their respective columns, Adult items should be after tot/ps items
+                within lunch. Select day, from dropdown, for the day of week to be parsed. Set the Lunch Count to tot/ps
+                item count, and Adult Count to the adult item count. Finally choose Headcount sheet to be parsed, and click
+                Run. When complete a download link will present itself. In the end everything used will be earased to
+                ensure security."/>
+                <br/>
+            </div>
+            <div class="col-sm-2"/>
+
+        </div>
+        <div class="row">
             <div class="col-sm-3">
                 <h:form id="form" enctype="multipart/form-data" prependId="true">
                     <h:inputFile id="file" value="#{fileUpload.file}">

@@ -6,6 +6,19 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
    <f:view>
-      <h:outputLabel value="Hello, world"/>
+      <h:form id="form">
+         <h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
+            <h:link value="Menu Upload" outcome="menuUpload"/>
+            <h:outputText value="Use this to upload menus, of .doc only, complications happen with .docx.
+             If needed just re-save any .docx files with the .doc tag"/>
+            <br/>
+            <h:link value="Head Count Sheet Upload" outcome="hcUpload"/>
+            <h:outputText value="Use this page to upload .xlsx Head Count sheets, include route 18,
+            and select date for parseing. Contact me to add support for route 19"/>
+            <br/>
+            <h:link value="Manual Menu" outcome="manualUpload"/>
+            <h:outputText value="Use this to use the first way of parsing sheets, where menu items are entered in manually"/>
+         </h:panelGrid>
+      </h:form>
    </f:view>
 </html>

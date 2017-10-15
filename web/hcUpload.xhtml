@@ -8,11 +8,27 @@
       xmlns:p="http://primefaces.org/ui">
 <h:head>
     <h:outputStylesheet name="bootstrap3/css/bootstrap.css"/>
-    <title><ui:insert name="title">Title</ui:insert></title>
+    <title><ui:insert name="title">Head Count Upload</ui:insert></title>
 </h:head>
 <h:body>
     <div class="container-fluid">
+
         <div class="row">
+            <div class="col-sm-2"/>
+            <div class="col-sm-8">
+                <br/>
+                <h:outputText value="Head Count Upload. Directions are as follows, select date to be used in upload on
+                right within calendar, this will show that days meals in each of the menu's spaces. Select the full .xlsx
+                head count sheet for parsing(make sure Monday-Friday exsists), this will select the day based on the date
+                selected. Finally when everything is selected, click Run, when parsing complete a download window will
+                present itself"/>
+                <br/>
+            </div>
+            <div class="col-sm-2"/>
+
+        </div>
+        <div class="row">
+            <h:form id="form1">
             <div class="col-sm-3">
                 <h:outputLabel value="Lunch:" style="font-weight:bold"/><br/>
                 <h:outputText value="#{hcUpload.lunch}" escape="false"/><br/>
@@ -37,6 +53,7 @@
                 <h:outputLabel value="Head Start Snack:" style="font-weight:bold"/><br/>
                 <h:outputText value="#{hcUpload.hsSnack}" escape="false"/><br/>
             </div>
+            </h:form>
             <div class="col-sm-3">
                 <h:form id="form5" enctype="multipart/form-data" prependId="true">
                     <p:calendar id="calendar" value="#{hcUpload.date}" mode="inline">
@@ -56,6 +73,7 @@
             <div class="col-sm-6"> </div>
             <div class="col-sm-3">
                 <h:form>
+                    <p:poll interval="1" update="form1"/>
                     <h:commandButton id="run" value="Run" action="#{hcUpload.runSheetParser}" rendered="true"/>
                 </h:form>
             </div>

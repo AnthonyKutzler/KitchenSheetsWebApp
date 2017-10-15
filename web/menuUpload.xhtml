@@ -7,10 +7,23 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
     <h:outputStylesheet name="bootstrap3/css/bootstrap.css"/>
-    <title><ui:insert name="title">Title</ui:insert></title>
+    <title><ui:insert name="title">Menu Upload</ui:insert></title>
 </h:head>
 <h:body>
     <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-2"/>
+            <div class="col-sm-8">
+                <br/>
+                <h:outputText value="Choose the correct menu(.doc) within the specified menu category(Note: this is not
+                smart chooseing the wrong category will result in undefined behavior). This only accepts .doc files,
+                re-save/format .docx files to .doc. When you are content with the menu's selected click Upload, and each menu
+                selected will be saved for later use."/>
+                <br/>
+            </div>
+            <div class="col-sm-2"/>
+
+        </div>
         <div class="row">
             <div class="col-sm-4">
                 <h:form id="form" enctype="multipart/form-data" prependId="true">

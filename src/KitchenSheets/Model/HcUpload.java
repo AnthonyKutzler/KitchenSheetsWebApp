@@ -1,9 +1,10 @@
 package KitchenSheets.Model;
 
 
-import KitchenSheets.Controller.DbController;
+import KitchenSheets.Controller.MenuDatabase;
 import KitchenSheets.Controller.XSSFWorkbookParser;
 
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.servlet.http.Part;
@@ -13,9 +14,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Named(value = "hcUpload")
 @ViewScoped
@@ -24,17 +23,17 @@ public class HcUpload implements Serializable {
     private static final String uploadPath = "/home/gob/webSheets/";
     //upload vars
     private Part file;
-    private String returnFileName;
-    private String dateString = "Todays Date";
+    //private String returnFileName;
+    private String dateString;
     private Date date = new Date();//= today's date
-
     private String lunch,sub,vegetarian,adult,breakfast, uBreakfast, snack, uSnack, hsSnack;
+    private List<String> psv = Arrays.asList("Protein", "Starch", "Veggie");
 
     public HcUpload(){
         updateMenus();
     }
     public void runSheetParser() throws IOException{
-        Map<String, Set<String>> map = new DbController().getMenus(dateString, true);
+        Map<String, Set<String>> map = new MenuDatabase().getMenus(dateString, true);
         File workingFile;
         InputStream iStream = file.getInputStream();
         workingFile = new File(uploadPath, file.getSubmittedFileName());
@@ -43,15 +42,22 @@ public class HcUpload implements Serializable {
         totalLunch.addAll(map.get("adult"));
         SimpleDateFormat format = new SimpleDateFormat("EEEE");
         String day = format.format(date);
-        returnFileName = new XSSFWorkbookParser(workingFile , day).parseCopy(new String[][]{
+        if(day.equals("Monday") || day.equals("Wednesday") || day.equals("Friday"))
+            totalLunch.add("Dessert");
+        totalLunch.addAll(psv);
+        String returnFileName = new XSSFWorkbookParser(workingFile , day).parseCopy(new String[][]{
                 totalLunch.toArray(new String[totalLunch.size()]),
                         map.get("breakfast").toArray(new String[map.get("breakfast").size()]),
                         map.get("snack").toArray(new String[map.get("snack").size()])} ,
-                new int[] {map.get("lunch").size(), totalLunch.size()});
+                new int[] {map.get("lunch").size() - 2, totalLunch.size() - 5});
+        workingFile.delete();
+        FileUpload.download(FacesContext.getCurrentInstance(), returnFileName);
+
     }
 
+
     public void updateMenus(){
-        Map<String, Set<String>> map = new DbController().getMenus(dateString, false);
+        Map<String, Set<String>> map = new MenuDatabase().getMenus(dateString, false);
         if(map.size() < 9){
             lunch = "No Data";
             sub = "No Data";
@@ -78,9 +84,9 @@ public class HcUpload implements Serializable {
     private String parseSet(Set<String> set){
         StringBuilder value = new StringBuilder("");
         for(String item : set.toArray(new String[set.size()])){
-            value.append(item + "&lt;br/&gt;");
+            value.append(item + ", "); //&lt;br /&gt;
         }
-        return value.toString();
+        return value.toString().substring(0, value.length() - 2);
     }
 
     public Part getFile() {
@@ -99,6 +105,7 @@ public class HcUpload implements Serializable {
         this.date = date;
         SimpleDateFormat format = new SimpleDateFormat("M/d");
         dateString = format.format(date);
+        updateMenus();
     }
 
     public String getLunch() {
@@ -173,3 +180,11 @@ public class HcUpload implements Serializable {
         this.hsSnack = hsSnack;
     }
 }
+
+
+/**
+ *
+ * AnthonyKutzler@gmail.com
+ *
+ *
+ */
