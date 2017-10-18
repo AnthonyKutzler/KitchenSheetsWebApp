@@ -12,7 +12,13 @@
 </h:head>
 <h:body>
     <div class="container-fluid">
-
+        <div class="row">
+            <div class="col-sm-1"/>
+            <div class="col-sm-1">
+                <h:link value="Home" outcome="index"/>
+            </div>
+            <div class="col-sm-10"/>
+        </div>
         <div class="row">
             <div class="col-sm-2"/>
             <div class="col-sm-8">
@@ -36,21 +42,19 @@
                 <h:outputText value="#{hcUpload.sub}" escape="false"/><br/>
                 <h:outputLabel value="Vegetarian:" style="font-weight:bold"/><br/>
                 <h:outputText value="#{hcUpload.vegetarian}" escape="false"/><br/>
-                <h:outputLabel value="Adult:" style="font-weight:bold"/><br/>
-                <h:outputText value="#{hcUpload.adult}" escape="false"/><br/>
+                <h:outputLabel value="Adult Option 1:" style="font-weight:bold"/><br/>
+                <h:outputText value="#{hcUpload.adult1}" escape="false"/><br/>
+                <h:outputLabel value="Adult Option 2:" style="font-weight:bold"/><br/>
+                <h:outputText value="#{hcUpload.adult2}" escape="false"/><br/>
             </div>
             <div class="col-sm-3">
                 <h:outputLabel value="Breakfast:" style="font-weight:bold"/><br/>
                 <h:outputText value="#{hcUpload.breakfast}" escape="false"/><br/>
-                <h:outputLabel value="United Breakfast:" style="font-weight:bold"/><br/>
-                <h:outputText value="#{hcUpload.uBreakfast}" escape="false"/><br/>
             </div>
             <div class="col-sm-3">
                 <h:outputLabel value="Snack:" style="font-weight:bold"/><br/>
                 <h:outputText value="#{hcUpload.snack}" escape="false"/><br/>
-                <h:outputLabel value="United Snack:" style="font-weight:bold"/><br/>
-                <h:outputText value="#{hcUpload.uSnack}" escape="false"/><br/>
-                <h:outputLabel value="Head Start Snack:" style="font-weight:bold"/><br/>
+                <h:outputLabel value="Club for Kids Snack:" style="font-weight:bold"/><br/>
                 <h:outputText value="#{hcUpload.hsSnack}" escape="false"/><br/>
             </div>
             </h:form>

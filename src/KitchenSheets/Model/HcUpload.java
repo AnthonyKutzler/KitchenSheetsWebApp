@@ -26,7 +26,7 @@ public class HcUpload implements Serializable {
     //private String returnFileName;
     private String dateString;
     private Date date = new Date();//= today's date
-    private String lunch,sub,vegetarian,adult,breakfast, uBreakfast, snack, uSnack, hsSnack;
+    private String lunch,sub,vegetarian,adult1,adult2,breakfast, uBreakfast, snack, uSnack, hsSnack;
     private List<String> psv = Arrays.asList("Protein", "Starch", "Veggie");
 
     public HcUpload(){
@@ -58,26 +58,25 @@ public class HcUpload implements Serializable {
 
     public void updateMenus(){
         Map<String, Set<String>> map = new MenuDatabase().getMenus(dateString, false);
-        if(map.size() < 9){
+        if(map.size() < 8){
             lunch = "No Data";
             sub = "No Data";
             vegetarian = "No Data";
-            adult = "No Data";
+            adult1 = "No Data";
+            adult2 = "No Data";
             breakfast = "No Data";
-            uBreakfast = "No Data";
             snack = "No Data";
-            uSnack = "No Data";
             hsSnack = "No Data";
             return;
         }
         lunch = parseSet(map.get("lunch"));
         sub = parseSet(map.get("sub"));
         vegetarian = parseSet(map.get("vegetarian"));
-        adult = parseSet(map.get("adult"));
+        adult1 = parseSet(map.get("adult1"));
+        adult2 = parseSet(map.get("adult2"));
         breakfast = parseSet(map.get("breakfast"));
-        uBreakfast = parseSet(map.get("ubreakfast"));
         snack = parseSet(map.get("snack"));
-        uSnack = parseSet(map.get("usnack"));
+        //Head start... should be Club For kids
         hsSnack = parseSet(map.get("hssnack"));
     }
 
@@ -132,12 +131,20 @@ public class HcUpload implements Serializable {
         this.vegetarian = vegetarian;
     }
 
-    public String getAdult() {
-        return adult;
+    public String getAdult1() {
+        return adult1;
     }
 
-    public void setAdult(String adult) {
-        this.adult = adult;
+    public void setAdult1(String adult1) {
+        this.adult1 = adult1;
+    }
+
+    public String getAdult2() {
+        return adult2;
+    }
+
+    public void setAdult2(String adult2) {
+        this.adult2 = adult2;
     }
 
     public String getBreakfast() {

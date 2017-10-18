@@ -49,11 +49,23 @@ public class MenuController {
             if (!initialSplit[z].equals("")) {
                 if (Character.isDigit(initialSplit[z].charAt(0))) {
                     String[] dates = initialSplit[z].split("   ");
+                    if(dates.length < 2)
+                        dates = initialSplit[z].split(" ");
                     for (int y = 0; y < dates.length; y++) {
                         if (!dates[y].contains("(closed)")) {
-                            new MenuDatabase().insertOrUpdate(dates[y].trim(), menu,
-                                    initialSplit[z + MenuDateOffset].replace("\r", "/")
-                                            .replace("\u000B","/"));
+                            if (menu.equals("adult")) {
+                                new MenuDatabase().insertOrUpdate(dates[y].trim(), "adult1",
+                                        initialSplit[z + (MenuDateOffset*2)].replace("\r", "/")
+                                                .replace("\u000B", "/"));
+                                new MenuDatabase().insertOrUpdate(dates[y].trim(), "adult2",
+                                        initialSplit[z + (MenuDateOffset*4)].replace("\r", "/")
+                                                .replace("\u000B", "/"));
+
+                            } else {
+                                new MenuDatabase().insertOrUpdate(dates[y].trim(), menu,
+                                        initialSplit[z + MenuDateOffset].replace("\r", "/")
+                                                .replace("\u000B", "/"));
+                            }
                         }
                     }
                 }

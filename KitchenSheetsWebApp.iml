@@ -26,5 +26,7 @@
     <orderEntry type="library" name="org.mariadb.jdbc:mariadb-java-client:2.1.0-SNAPSHOT" level="application" />
     <orderEntry type="library" name="PrimeFaces-6.1" level="project" />
     <orderEntry type="library" name="org.apache.poi:poi-scratchpad:3.16" level="application" />
+    <orderEntry type="library" name="DatabaseConnection2" level="application" />
+    <orderEntry type="library" name="DatabaseConnection" level="project" />
   </component>
 </module>

@@ -105,7 +105,8 @@ public class XSSFWorkbookParser {
                 }
                 //If first row set Day and items
                 if (workingRow.getRowNum() == 0) {
-                    templateRow = templateSheet.getRow(0);
+                    int rowOffset = 0;
+                    templateRow = templateSheet.getRow(rowOffset);
                     templateRow.getCell(dayOffset).setCellValue(day);
                     parseItems(templateSheet, templateRow, dayOffset + 3, currentItems);
                 }else if(rowsToDelete.contains(workingRow.getCell(1).getStringCellValue())){
@@ -116,7 +117,9 @@ public class XSSFWorkbookParser {
                         if (workingRow.getCell(columnOffset + 2).getNumericCellValue() > 0) {
                             rowCount++;
                             int maxColumn = dayOffset + currentItems.length + 3;
-                            templateRow = templateSheet.createRow(workingRow.getRowNum() - skippedRowCount);
+                            int rowOffset = 0;
+                            //int rowOffset = lunch ? 0 : 1;
+                            templateRow = templateSheet.createRow((workingRow.getRowNum() - skippedRowCount) + rowOffset);
                             //TODO: Test before implementation
                             for (int y = 0; y < maxColumn; y++) {
                                 //TODO: Check Logic

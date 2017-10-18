@@ -12,6 +12,13 @@
 <h:body>
     <div class="container-fluid">
         <div class="row">
+            <div class="col-sm-1"/>
+            <div class="col-sm-1">
+                <h:link value="Home" outcome="index"/>
+            </div>
+            <div class="col-sm-10"/>
+        </div>
+        <div class="row">
             <div class="col-sm-2"/>
             <div class="col-sm-8">
                 <br/>
@@ -55,10 +62,6 @@
                     <h:inputFile id="breakfast" value="#{menuUpload.breakfast}">
                         <f:ajax execute="@this"/>
                     </h:inputFile>
-                    <h:outputLabel value="United Breakfast"/>
-                    <h:inputFile id="ubreakfast" value="#{menuUpload.uBreakfast}">
-                        <f:ajax execute="@this"/>
-                    </h:inputFile>
                 </h:form>
             </div>
             <div class="col-sm-4">
@@ -67,11 +70,7 @@
                     <h:inputFile id="snack" value="#{menuUpload.snack}">
                         <f:ajax execute="@this"/>
                     </h:inputFile>
-                    <h:outputLabel value="United Snack"/>
-                    <h:inputFile id="usnack" value="#{menuUpload.uSnack}">
-                        <f:ajax execute="@this"/>
-                    </h:inputFile>
-                    <h:outputLabel value="Head Start Snack"/>
+                    <h:outputLabel value="Club for Kids Snack"/>
                     <h:inputFile id="hssnack" value="#{menuUpload.hsSnack}">
                         <f:ajax execute="@this"/>
                     </h:inputFile>

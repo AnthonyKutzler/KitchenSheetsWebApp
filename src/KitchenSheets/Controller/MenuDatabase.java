@@ -1,28 +1,25 @@
 package KitchenSheets.Controller;
 
-import KitchenSheets.Interface.DatabaseCreds;
 import KitchenSheets.Interface.SqlStatements;
-import org.mariadb.jdbc.MariaDbDataSource;
+import org.DB.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.*;
+
+
 
 public class MenuDatabase extends DatabaseConnection implements SqlStatements {
 
-    static private final String[] excellMenus = {"lunch", "adult", "breakfast", "snack"};
-    static private final String[] menus = {"lunch", "sub", "vegetarian", "adult", "breakfast", "ubreakfast", "snack",
-                                            "usnack", "hssnack"};
+    static private final String[] excelMenus = {"lunch", "adult", "breakfast", "snack"};
+    static private final String[] menus = {"lunch", "sub", "vegetarian", "adult1", "adult2", "breakfast", "snack", "hssnack"};
 
     Connection dbconn = null;
     PreparedStatement ps = null;
 
-
-    //TODO: Be sure to test.
     public MenuDatabase() {
-        super();
+        super("QualityHcSheet");
         connectToDb();
     }
 
@@ -46,7 +43,7 @@ public class MenuDatabase extends DatabaseConnection implements SqlStatements {
 
     public Map<String, Set<String>> getMenus(String date, boolean forExcell){
         Map<String, Set<String>> itemMap = new HashMap<>();
-        String[] items = new String[9];
+        String[] items = new String[8];
         try {
             ps = dbconn.prepareStatement(selectSQL);
             ps.setString(1, date);
@@ -56,28 +53,35 @@ public class MenuDatabase extends DatabaseConnection implements SqlStatements {
                     items[0] = rs.getString("lunch");
                     items[1] = rs.getString("sub");
                     items[2] = rs.getString("vegetarian");
-                    items[3] = rs.getString("adult");
-                    items[4] = rs.getString("breakfast");
-                    items[5] = rs.getString("ubreakfast");
+                    items[3] = rs.getString("adult1");
+                    items[4] = rs.getString("adult2");
+                    items[5] = rs.getString("breakfast");
                     items[6] = rs.getString("snack");
-                    items[7] = rs.getString("usnack");
-                    items[8] = rs.getString("hssnack");
+                    items[7] = rs.getString("hssnack");
                 }while (rs.next());
             }
             if(forExcell){
                 List<String> hotItems = getHotItems(selectHotSQL);
-                String[] excellItems = {"Cold Trays/" + items[0] + "/Allergy/" + items[1] + "/" + items[2], items[3],"Cold Trays/" + items[4] + "/" + items[5],
-                                        "Cold Trays/" + items[6] + "/" + items[7] + "/" + items[8]};
+                String[] excellItems = {"Cold Trays/" + items[0] + "/Allergy/" + items[1] + "/" + items[2], items[3] + "/" + items[4],"Cold Trays/" + items[5],
+                                        "Cold Trays/" + items[6] + "/" + items[7] + "/"};
                 for(int z = 0; z < excellItems.length; z++) {
                     Set<String> set = new LinkedHashSet<>();
                     for (String item : excellItems[z].split("/")) {
+                        boolean contains = false;
                         if(!hotItems.contains(item.trim())) {
                             if(item.equals("No Data"))
                                 continue;
-                            set.add(item.trim());
+                            for(String temp : set){
+                                for(String temp2 : temp.split(" ")) {
+                                    if (set.contains(temp2))
+                                        contains = true;
+                                }
+                            }
+                            if(!contains)
+                                set.add(item.trim());
                         }
                     }
-                    itemMap.put(excellMenus[z], set);
+                    itemMap.put(excelMenus[z], set);
                 }
 
             }else {
@@ -107,6 +111,7 @@ public class MenuDatabase extends DatabaseConnection implements SqlStatements {
     }
 
     void insertOrUpdate(String date, String column, String items){
+        connectToDb();
         String[] itemsArray = items.split("/");
         List<String> hotPrefixes = getHotItems(selectHotPreSQL);
         try{
@@ -141,6 +146,7 @@ public class MenuDatabase extends DatabaseConnection implements SqlStatements {
         }finally {
             try {
                 dbconn.close();
+                dbconn = null;
             }catch (Exception e){}
         }
     }
