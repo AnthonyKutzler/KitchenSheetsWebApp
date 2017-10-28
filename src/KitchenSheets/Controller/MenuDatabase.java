@@ -1,11 +1,13 @@
 package KitchenSheets.Controller;
 
 import KitchenSheets.Interface.SqlStatements;
+import com.sun.istack.internal.NotNull;
 import org.DB.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
 
@@ -60,6 +62,8 @@ public class MenuDatabase extends DatabaseConnection implements SqlStatements {
                     items[7] = rs.getString("hssnack");
                 }while (rs.next());
             }
+            ps.close();
+            dbconn.close();
             if(forExcell){
                 List<String> hotItems = getHotItems(selectHotSQL);
                 String[] excellItems = {"Cold Trays/" + items[0] + "/Allergy/" + items[1] + "/" + items[2], items[3] + "/" + items[4],"Cold Trays/" + items[5],
@@ -68,8 +72,11 @@ public class MenuDatabase extends DatabaseConnection implements SqlStatements {
                     Set<String> set = new LinkedHashSet<>();
                     for (String item : excellItems[z].split("/")) {
                         boolean contains = false;
+                        item = item.replaceAll("[^a-zA-Z0-9]", "");
                         if(!hotItems.contains(item.trim())) {
                             if(item.equals("No Data"))
+                                continue;
+                            else if(item.equalsIgnoreCase("corn"))
                                 continue;
                             for(String temp : set){
                                 for(String temp2 : temp.split(" ")) {
@@ -77,15 +84,19 @@ public class MenuDatabase extends DatabaseConnection implements SqlStatements {
                                         contains = true;
                                 }
                             }
-                            if(!contains)
+                            if(!contains) {
+                                //TODO: Implement
+                                /*String renamedItem = renameMenuItems(item.trim());
+                                if(renamedItem != null)
+                                    set.add(renamedItem.trim());*/
                                 set.add(item.trim());
+                            }
                         }
                     }
                     itemMap.put(excelMenus[z], set);
                 }
 
             }else {
-                //TODO: Change all to LinkedHashSet
                 for (int z = 0; z < items.length; z++) {
                     Set<String> set = new LinkedHashSet<>();
                     for (String item : items[z].split("/")) {
@@ -108,6 +119,23 @@ public class MenuDatabase extends DatabaseConnection implements SqlStatements {
             }
         }
         return itemMap;
+    }
+
+    private String renameMenuItems(String item){
+        //Broad Category
+        List<String> broadCat = getSpecificItems("bread");
+        if(broadCat.parallelStream().anyMatch(item::contains))
+            return "Bread";
+        broadCat = getSpecificItems("fruit");
+        if(broadCat.parallelStream().anyMatch(item::contains))
+            return "Fruit";
+        broadCat = getSpecificItems("salad");
+        if(broadCat.parallelStream().anyMatch(item::contains))
+            return "Salad";
+        broadCat = getSpecificItems("cereal");
+        if(broadCat.parallelStream().anyMatch(item::contains))
+            return "Cereal";
+        return null;
     }
 
     void insertOrUpdate(String date, String column, String items){
@@ -134,10 +162,10 @@ public class MenuDatabase extends DatabaseConnection implements SqlStatements {
                 ps.setString(1, date);
                 ResultSet rs = ps.executeQuery();
                 if (rs.first()) {
-                    preparedStatement(updateSQLPrefix + column + updateSQLSuffix, items, date);
+                    prepareMenuStatement(updateSQLPrefix + column + updateSQLSuffix, items, date);
                     ps.executeUpdate();
                 } else {
-                    preparedStatement(insertSQLPrefix + column + insertSQLSuffix, date, items);
+                    prepareMenuStatement(insertSQLPrefix + column + insertSQLSuffix, date, items);
                     ps.executeUpdate();
                 }
 
@@ -151,8 +179,33 @@ public class MenuDatabase extends DatabaseConnection implements SqlStatements {
         }
     }
 
-    public void preparedStatement(String sql, String date, String items){
+
+    private List<String> getSpecificItems(String category){
+        prepareSpecificStatement(selectSpecificPrefix + category + selectSpecificSuffix);
+        List<String> items = new ArrayList<>();
         try {
+            ResultSet rs = ps.executeQuery();
+            if(rs.first()){
+                items = Arrays.asList(rs.getString(category.toLowerCase()).split("/"));
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return items;
+    }
+
+    private void prepareSpecificStatement(String sql){
+        try {
+            connectToDb();
+            ps = dbconn.prepareStatement(sql);
+        }catch (Exception e){}
+    }
+
+    private void prepareMenuStatement(String sql, String date, String items){
+        try {
+            connectToDb();
             ps = dbconn.prepareStatement(sql);
             ps.setString(1, date);
             ps.setString(2, items);
