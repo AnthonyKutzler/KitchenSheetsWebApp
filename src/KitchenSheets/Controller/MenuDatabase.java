@@ -85,7 +85,6 @@ public class MenuDatabase extends DatabaseConnection implements SqlStatements {
                                 }
                             }
                             if(!contains) {
-                                //TODO: Implement
                                 /*String renamedItem = renameMenuItems(item.trim());
                                 if(renamedItem != null)
                                     set.add(renamedItem.trim());*/

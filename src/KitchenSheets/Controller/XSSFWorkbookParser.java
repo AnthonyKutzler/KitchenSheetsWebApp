@@ -120,9 +120,7 @@ public class XSSFWorkbookParser {
                             int rowOffset = 0;
                             //int rowOffset = lunch ? 0 : 1;
                             templateRow = templateSheet.createRow((workingRow.getRowNum() - skippedRowCount) + rowOffset);
-                            //TODO: Test before implementation
                             for (int y = 0; y < maxColumn; y++) {
-                                //TODO: Check Logic
                                 if (y < dayOffset + 1) {
                                     Cell oldCell = workingRow.getCell(y);
                                     Cell newCell = templateRow.createCell(y, oldCell.getCellTypeEnum());
@@ -140,7 +138,6 @@ public class XSSFWorkbookParser {
                             if(!lunch){
                                 int tempRouteNumber = (int)templateRow.getCell(0).getNumericCellValue();
                                 if(routeNumber != tempRouteNumber){
-                                    //TODO:
                                         routeNumber = tempRouteNumber;
                                         templateSheet.setRowBreak(templateRow.getRowNum() - 1);
                                 }
@@ -172,7 +169,6 @@ public class XSSFWorkbookParser {
                 //2, 3, 4, 8 All columns
                 //2, 3, 4, 7, 8 at least 8
                 //everyone else at least 6
-                //TODO: Correct Column, At count/set Rows
                 case "1":
                 case "6":
                 case "11":
